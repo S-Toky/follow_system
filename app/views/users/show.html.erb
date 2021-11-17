@@ -1,0 +1,26 @@
+<div class="container">
+  <p> <%= @user.username %> || <%= @user.email %> </p>
+  <%= link_to "S'abonner", user_relationships_path(@user), method: :post, class:"btn btn-success" unless @rel.present? %>
+  <%= link_to "Se désabonner", relationship_path(@rel), method: :delete, class:"btn btn-danger" if @rel.present? %>
+
+  <p> Abonnement: <%= @user.followers.count %> :
+    <ul>
+    <% if @followers.present? %>
+      <% @followers.each do |follower| %>
+        <% follow = Relationship.find(follower) %>
+        <li><%= follow.follower.username %></li>
+      <% end %>
+    <% end %>
+    </ul>
+  </p>
+  <p> Abonné: <%= @user.followings.count %>
+    <ul>
+      <% if @followings.present? %>
+        <% @followings.each do |followed| %>
+          <% follow = Relationship.find(followed) %>
+          <li><%= follow.followed.username %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </p>
+</div>
